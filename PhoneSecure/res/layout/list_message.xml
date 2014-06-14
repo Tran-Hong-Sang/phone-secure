@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#F0F0F0"
+    >
+    
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="65.06"
+	    android:background="#F0F0F0"
+	    android:orientation="vertical" >
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/list_view_item"/>
+		
+	 </LinearLayout>
+
+	<include
+	    android:layout_width="match_parent"
+	    android:layout_height="0dip"
+	    android:layout_weight="11.00"
+	    layout="@layout/bottom_dockbar" />
+
+</LinearLayout>

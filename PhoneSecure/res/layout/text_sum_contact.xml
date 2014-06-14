@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    android:orientation="horizontal" >
+    
+    <LinearLayout
+        android:layout_width="216dp"
+        android:layout_height="match_parent"
+        android:background="#000"
+        android:orientation="vertical" >
+
+        <!-- title -->
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.63"
+            android:text="@string/contact_label"
+            android:textColor="#F3F3F3"
+            android:textIsSelectable="true"
+            android:textSize="18sp" />
+
+        <!-- summary -->
+
+        <TextView
+            android:id="@+id/item_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.36"
+            android:text="@string/summary_sms"
+            android:textColor="#F3F3F3"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+	<!-- time -->
+
+    <TextView
+        android:id="@+id/item_counter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:text="@string/time"
+        android:textColor="#F3F3F3"
+        android:textIsSelectable="true"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+    
+
+</LinearLayout>

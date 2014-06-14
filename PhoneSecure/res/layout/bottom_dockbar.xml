@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4d4b4b"
+    android:orientation="horizontal"
+    android:textAlignment="viewEnd" >
+
+    <Button
+        android:id="@+id/newsms"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:background="#6d6d6d"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/new_message"
+        android:textColor="#F0F0F0" />
+
+    <Button
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="1dp"
+        android:layout_gravity="left"
+        android:background="#6d6d6d"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/settings"
+        android:textColor="#F0F0F0" />
+
+</LinearLayout>

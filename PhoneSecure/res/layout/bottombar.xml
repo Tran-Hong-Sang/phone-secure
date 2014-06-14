@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/listView_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.84"
+        android:divider="#000" >
+    </ListView>
+
+    <RelativeLayout
+        android:id="@+id/form"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="#000"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="@string/typesms"
+            android:inputType="text"
+            android:textColorHint="#fff" />
+
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/editText1"
+            android:layout_toRightOf="@+id/editText1"
+            android:text="@string/sendBtn" />
+    </RelativeLayout>
+
+</LinearLayout>

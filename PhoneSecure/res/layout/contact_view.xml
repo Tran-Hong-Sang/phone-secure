@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="70dp"
+    android:background="#000"
+    android:orientation="horizontal" >
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.34"
+        android:ems="10"
+        android:hint="@string/to"
+        android:textColorHint="#fff" >
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <ImageButton
+        android:id="@+id/imageView1"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.45"
+        android:contentDescription="@string/contact_label"
+        android:src="@drawable/user" />
+
+</LinearLayout>
