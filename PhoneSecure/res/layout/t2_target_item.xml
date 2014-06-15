@@ -18,5 +18,5 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        layout="@layout/text_sum_contact" />
+        layout="@layout/t2_text_sum_contact" />
 </LinearLayout>

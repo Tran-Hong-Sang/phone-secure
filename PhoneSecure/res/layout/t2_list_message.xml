@@ -14,7 +14,7 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            layout="@layout/list_view_item"/>
+            layout="@layout/t2_list_view_item"/>
 		
 	 </LinearLayout>
 
@@ -22,6 +22,6 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dip"
 	    android:layout_weight="11.00"
-	    layout="@layout/bottom_dockbar" />
+	    layout="@layout/t2_bottom_dockbar" />
 
 </LinearLayout>

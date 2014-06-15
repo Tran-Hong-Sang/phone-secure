@@ -8,7 +8,7 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        layout="@layout/contact_view"
+        layout="@layout/t2_contact_view"
          />
 
     <LinearLayout 
@@ -18,7 +18,7 @@
         android:layout_marginTop="70dp"
         >
         <include
-        layout="@layout/bottombar"
+        layout="@layout/t2_bottombar"
         android:paddingTop="70dp" />
     </LinearLayout>
 
