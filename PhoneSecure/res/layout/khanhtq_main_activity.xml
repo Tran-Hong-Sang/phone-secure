@@ -24,11 +24,33 @@
             android:gravity="right" >
             <Button
             android:id="@+id/btn_main_security_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/launcher_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/t2_settings"
             android:layout_alignParentRight="true"
             />
+
+            <Button
+                android:id="@+id/btn_main_lock"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                android:background="@drawable/t2_lock_app"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/btn_main_security_settings"
+                android:layout_marginRight="10dp"
+                />
+
+            <Button
+                android:id="@+id/t2_main_import_messages"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                 android:background="@drawable/t2_import"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                />
+            
         </RelativeLayout>
 
         
