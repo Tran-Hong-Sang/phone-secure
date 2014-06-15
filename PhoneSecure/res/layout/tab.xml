@@ -6,8 +6,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     binding:tabs="TAB(
-    				{tag='1', activity='com.gueei.applocker.AppLockerPreferenceActivity', label='Preference'},
-    				{tag='2', activity='com.gueei.applocker.ApplicationListActivity', label='Black List'}
+    				{tag='1', activity='com.khanhtq.phonesecurity.locker.AppLockerPreferenceActivity', label='Preference'},
+    				{tag='2', activity='com.khanhtq.phonesecurity.locker.ApplicationListActivity', label='Black List'}
     			)"
     >
 	<LinearLayout

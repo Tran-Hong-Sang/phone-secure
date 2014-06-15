@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gueei.applocker"
+    package="com.khanhtq.phonesecurity"
     android:versionCode="3"
     android:versionName="1.2" >
 
@@ -16,11 +16,11 @@
 
     <application
         android:allowBackup="true"
-        android:name="AppLockerApplication"
+        android:name="com.khanhtq.phonesecurity.locker.AppLockerApplication"
         android:icon="@drawable/launcher_icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".AppLockerActivity"
+            android:name="com.khanhtq.phonesecurity.locker.AppLockerActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
@@ -31,26 +31,26 @@
             -->
         </activity>
         <activity
-            android:name="AppLockerPreferenceActivity"
+            android:name="com.khanhtq.phonesecurity.locker.AppLockerPreferenceActivity"
             android:label="@string/appLockerPreferenceActivityName"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="ApplicationListActivity"
+            android:name="com.khanhtq.phonesecurity.locker.ApplicationListActivity"
             android:label="@string/appLockerPreferenceActivityName" >
         </activity>
 
-        <service android:name="DetectorService" >
+        <service android:name="com.khanhtq.phonesecurity.locker.DetectorService" >
         </service>
         <activity
-            android:name="LockScreenActivity"
+            android:name="com.khanhtq.phonesecurity.locker.LockScreenActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:screenOrientation="portrait" />
         
         <activity
-            android:name="com.gueei.applocker.khanhtq.activities.MainActivity"
+            android:name="com.khanhtq.phonesecurity.activities.MainActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:noHistory="true"
@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
         
-        <receiver android:name="StartupServiceReceiver" >
+        <receiver android:name="com.khanhtq.phonesecurity.locker.StartupServiceReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />

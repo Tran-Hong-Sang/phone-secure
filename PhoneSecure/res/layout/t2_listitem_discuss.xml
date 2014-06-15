@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dip"
-            android:background="@drawable/bubble_yellow"
+            android:background="@drawable/t2_bubble_yellow"
             android:paddingLeft="10dip"
             android:text="@string/contact_label"
             android:textColor="@android:color/primary_text_light" />
