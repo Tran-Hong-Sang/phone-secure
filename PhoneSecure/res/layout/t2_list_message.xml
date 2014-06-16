@@ -1,27 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
     android:background="#F0F0F0"
-    >
-    
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="0dp"
-	    android:layout_weight="65.06"
-	    android:background="#F0F0F0"
-	    android:orientation="vertical" >
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/t2_list_view_item"/>
-		
-	 </LinearLayout>
+    android:orientation="vertical" >
 
-	<include
-	    android:layout_width="match_parent"
-	    android:layout_height="0dip"
-	    android:layout_weight="11.00"
-	    layout="@layout/t2_bottom_dockbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65.06"
+        android:background="#F0F0F0"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/t2_sent_inbox_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+    </LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="11.00"
+        layout="@layout/t2_bottom_dockbar" />
 
 </LinearLayout>

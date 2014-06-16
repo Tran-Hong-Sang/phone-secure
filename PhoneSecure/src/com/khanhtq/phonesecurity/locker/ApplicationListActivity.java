@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.khanhtq.phonesecurity.R;
-import com.khanhtq.phonesecurity.activities.MainActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -78,9 +77,6 @@ public class ApplicationListActivity extends Activity {
 					}
 				}
 				Log.e("PKGName", info.activityInfo.packageName);
-				//khanhtran added
-				if(info.activityInfo.packageName.startsWith("com.khanhtq.phonesecurity") == false)
-				// end
 				items.add(new AppItem(info.activityInfo.loadLabel(
 						getPackageManager()).toString(),
 						info.activityInfo.name, info.activityInfo.packageName,
@@ -204,13 +200,4 @@ public class ApplicationListActivity extends Activity {
 		AppLockerPreference.getInstance(this).saveApplicationList(
 				allowed.toArray(new String[0]));
 	}
-
-	// Khanh Tran Added
-	@Override
-	public void onBackPressed() {
-		Intent i = new Intent(this, MainActivity.class);
-		startActivity(i);
-		this.finish();
-	}
-	// end
 }

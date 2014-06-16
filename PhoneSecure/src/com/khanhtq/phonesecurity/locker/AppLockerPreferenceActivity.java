@@ -1,7 +1,7 @@
 package com.khanhtq.phonesecurity.locker;
 
+
 import com.khanhtq.phonesecurity.R;
-import com.khanhtq.phonesecurity.activities.MainActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,20 +11,17 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 public class AppLockerPreferenceActivity extends PreferenceActivity {
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.addPreferencesFromResource(R.xml.preferences);
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.registerOnSharedPreferenceChangeListener(
-						serviceEnabledListener);
+	    super.onCreate(savedInstanceState);
+	    this.addPreferencesFromResource(R.xml.preferences);
+	    PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(serviceEnabledListener);
 	}
-
-	OnSharedPreferenceChangeListener serviceEnabledListener = new OnSharedPreferenceChangeListener() {
+	
+	OnSharedPreferenceChangeListener serviceEnabledListener = new OnSharedPreferenceChangeListener(){
 		public void onSharedPreferenceChanged(
 				SharedPreferences sharedPreferences, String key) {
-			if (key.equals("service_enabled")) {
+			if (key.equals("service_enabled")){
 				if (sharedPreferences.getBoolean(key, false))
 					startService();
 				else
@@ -41,13 +38,4 @@ public class AppLockerPreferenceActivity extends PreferenceActivity {
 		Intent startService = new Intent(this, DetectorService.class);
 		this.startService(startService);
 	}
-
-	// Khanh Tran Added
-	@Override
-	public void onBackPressed() {
-		Intent i = new Intent(this, MainActivity.class);
-		startActivity(i);
-		this.finish();
-	}
-	// end
 }

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract.PhoneLookup;
 
 import com.khanhtq.phonesecurity.models.Message;
 
@@ -49,7 +51,8 @@ public class T2_SMSUtility {
 				objSms.setDate(c.getLong(c.getColumnIndexOrThrow("date")));
 				if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
 					objSms.setType(Message.TYPE_INBOX);
-				} else if(c.getString(c.getColumnIndexOrThrow("type")).contains("2")){
+				} else if (c.getString(c.getColumnIndexOrThrow("type"))
+						.contains("2")) {
 					objSms.setType(Message.TYPE_SENT);
 				}
 
@@ -61,4 +64,27 @@ public class T2_SMSUtility {
 
 		return lstSms;
 	}
+
+	public static CharSequence getAddress(Context c, String phoneNumber) {
+		String name = phoneNumber;
+		ContentResolver cr = c.getContentResolver();
+		Cursor cur = cr.query(
+				Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
+						Uri.encode(phoneNumber)),
+				new String[] { PhoneLookup.DISPLAY_NAME }, null, null, null);
+		if (cur != null) {
+			try {
+				if (cur.getCount() > 0) {
+					if (cur.moveToFirst()) {
+						name = cur.getString(cur
+								.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+					}
+				}
+			} finally {
+				cur.close();
+			}
+		}
+		return name;
+	}
+
 }

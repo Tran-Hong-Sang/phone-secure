@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.khanhtq.phonesecurity.utils.T2_Singleton;
 
 public class MainActivity extends Activity implements OnClickListener {
 	Button btn_main_security_settings, btn_lock;
+	ImageButton btnInbox,btnConversation, btnSent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		btn_lock.setOnClickListener(this);
 		btn_main_security_settings = (Button) findViewById(R.id.btn_main_security_settings);
 		btn_main_security_settings.setOnClickListener(this);
+		
+		btnInbox = (ImageButton) findViewById(R.id.t2_main_inbox);
+		btnSent = (ImageButton) findViewById(R.id.t2_main_sent);
+		btnConversation = (ImageButton) findViewById(R.id.t2_main_conversation);
+		btnInbox.setOnClickListener(this);
+		btnSent.setOnClickListener(this);
+		btnConversation.setOnClickListener(this);
 	}
 
 	@Override
@@ -62,6 +71,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			LoginDialog ld = new LoginDialog(this);
 			ld.setTitle("Locked");
 			ld.show();
+		}
+		if(v == btnInbox){
+			Intent i = new Intent(this, T2_ListMessage.class);
+			i.putExtra("type", "inbox");
+			startActivity(i);
 		}
 	}
 }

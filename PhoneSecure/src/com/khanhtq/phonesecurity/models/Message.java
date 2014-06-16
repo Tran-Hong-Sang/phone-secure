@@ -17,6 +17,19 @@ public class Message {
 	 * The buddy number
 	 */
 	private String from;
+	public Message(int _id, String from, String address, long date, int type,
+			int read, int status, String body) {
+		super();
+		this._id = _id;
+		this.from = from;
+		this.address = address;
+		this.date = date;
+		this.type = type;
+		this.read = read;
+		this.status = status;
+		this.body = body;
+	}
+
 	private String address;
 	
 	public String getAddress() {

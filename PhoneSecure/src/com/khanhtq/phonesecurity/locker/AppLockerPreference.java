@@ -47,7 +47,6 @@ public class AppLockerPreference implements OnSharedPreferenceChangeListener {
 		mServiceEnabled = mPref.getBoolean(PREF_SERVICE_ENABLED, false);
 		mApplicationList = mPref.getString(PREF_APPLICATION_LIST, "").split(";");
 		mAutoStart = mPref.getBoolean(PREF_AUTO_START, false);
-		// decrypt password here
 		mPassword = mPref.getString(PREF_PASSWORD, "1234");
 		if (mPref.getBoolean("relock_policy", true)){
 			try{
@@ -80,7 +79,6 @@ public class AppLockerPreference implements OnSharedPreferenceChangeListener {
 		return mPassword;
 	}
 	public void savePassword(String password) {
-		// Encrypt password here
 		mPassword = password;
 		mPref.edit().putString(PREF_PASSWORD, password);
 	}

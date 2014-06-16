@@ -12,112 +12,103 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.util.Log;
 
-public class ActivityStartingHandler implements ActivityStartingListener {
+public class ActivityStartingHandler implements ActivityStartingListener{
 	private Context mContext;
 	private ActivityManager mAm;
 	private String lastRunningPackage;
 	private Hashtable<String, Runnable> tempAllowedPackages = new Hashtable<String, Runnable>();
 	private Handler handler;
 	private String lockScreenActivityName;
-
-	public ActivityStartingHandler(Context context) {
+	
+	public ActivityStartingHandler(Context context){
 		mContext = context;
 		handler = new Handler();
-		mAm = (ActivityManager) mContext
-				.getSystemService(Context.ACTIVITY_SERVICE);
+		mAm = (ActivityManager)mContext.getSystemService(Context.ACTIVITY_SERVICE);
 		lastRunningPackage = getRunningPackage();
-		context.registerReceiver(new BroadcastReceiver() {
+		context.registerReceiver(new BroadcastReceiver(){
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				String packagename = intent
-						.getStringExtra(LockScreenActivity.EXTRA_PACKAGE_NAME);
-				if (AppLockerPreference.getInstance(mContext)
-						.getRelockTimeout() > 0) {
-					if (tempAllowedPackages.containsKey(packagename)) {
+				String packagename = intent.getStringExtra(LockScreenActivity.EXTRA_PACKAGE_NAME);
+				if (AppLockerPreference.getInstance(mContext).getRelockTimeout() > 0){
+					if (tempAllowedPackages.containsKey(packagename)){
 						// Extend the time
-						Log.d("Detector", "Extending timeout for: "
-								+ packagename);
-						handler.removeCallbacks(tempAllowedPackages
-								.get(packagename));
+						Log.d("Detector", "Extending timeout for: " + packagename);
+						handler.removeCallbacks(tempAllowedPackages.get(packagename));
 					}
 					Runnable runnable = new RemoveFromTempRunnable(packagename);
 					tempAllowedPackages.put(packagename, runnable);
-					handler.postDelayed(runnable,
-							AppLockerPreference.getInstance(mContext)
-									.getRelockTimeout() * 1000 * 60);
+					handler.postDelayed(runnable, 
+							AppLockerPreference.getInstance(mContext).getRelockTimeout() * 1000 * 60);
 					log();
 				}
 				lastRunningPackage = packagename;
 			}
 		}, new IntentFilter(LockScreenActivity.ACTION_APPLICATION_PASSED));
-
-		lockScreenActivityName = ".LockScreenActivity";
+		
+		lockScreenActivityName = ".LockScreenActivity" ;
 	}
 
-	private void log() {
+	private void log(){
 		String output = "temp allowed: ";
-		for (String p : tempAllowedPackages.keySet()) {
+		for(String p: tempAllowedPackages.keySet()){
 			output += p + ", ";
 		}
 		Log.d("Detector", output);
 	}
-
-	private class RemoveFromTempRunnable implements Runnable {
+	
+	private class RemoveFromTempRunnable implements Runnable{
 		private String mPackageName;
-
-		public RemoveFromTempRunnable(String pname) {
+		public RemoveFromTempRunnable(String pname){
 			mPackageName = pname;
 		}
-
 		public void run() {
 			Log.d("Detector", "Lock timeout Expires: " + mPackageName);
 			tempAllowedPackages.remove(mPackageName);
 		}
 	}
-
-	private String getRunningPackage() {
+	
+	private String getRunningPackage(){
 		List<RunningTaskInfo> infos = mAm.getRunningTasks(1);
-		if (infos.size() < 1)
-			return null;
+		if (infos.size()<1) return null; 
 		RunningTaskInfo info = infos.get(0);
 		return info.topActivity.getPackageName();
 	}
-
-	public void onActivityStarting(String packageName, String activityName) {
-
-		// debug: //debug: log.i("Detector","onActivityStarting");
-		synchronized (this) {
-
-			// Putting the lastRunningPackage up makes applocker's preferences
-			// activties
-			// not getting locked all the time!
-			if (packageName.equals(lastRunningPackage))
-				return;
-
-			if (packageName.equals(mContext.getPackageName())) {
+	
+	
+	 public void onActivityStarting(String packageName, String activityName) {
+	 
+		//debug: //debug: log.i("Detector","onActivityStarting");
+		synchronized(this){
+			
+			//Putting the lastRunningPackage up makes applocker's preferences activties
+			//not getting locked all the time!
+			if (packageName.equals(lastRunningPackage)) return;
+			
+			
+			if (packageName.equals(mContext.getPackageName())){
 				// Of course cannot block lock screen
-				// debug: //debug: log.i("Detector",activityName);
-				// debug: //debug: log.i("Detector",lockScreenActivityName);
-				if (activityName.equals(lockScreenActivityName))
-					return;
+				//debug: //debug: log.i("Detector",activityName);
+				//debug: //debug: log.i("Detector",lockScreenActivityName);
+//				if (activityName.equals(lockScreenActivityName)) return;
+				if (activityName.contains("LockScreenActivity")) return;
 				// But we need to block preferences
 				blockActivity(packageName, activityName);
 			}
-
-			String[] list = AppLockerPreference.getInstance(mContext)
-					.getApplicationList();
-
+			
+			
+			
+			String[] list = AppLockerPreference.getInstance(mContext).getApplicationList();
+			
 			if ((AppLockerPreference.getInstance(mContext).getRelockTimeout() > 0))
-				if (tempAllowedPackages.containsKey(packageName))
-					return;
-
-			for (int i = 0; i < list.length; i++) {
-				if (list[i].equals(packageName)) {
+				if (tempAllowedPackages.containsKey(packageName)) return;
+			
+			for(int i=0; i<list.length; i++){
+				if (list[i].equals(packageName)){
 					blockActivity(packageName, activityName);
 					return;
 				}
 			}
-
+			
 			lastRunningPackage = packageName;
 		}
 	}
@@ -130,11 +121,8 @@ public class ActivityStartingHandler implements ActivityStartingListener {
 		
 		lockIntent.putExtra(LockScreenActivity.BlockedActivityName, activityName)
 			.putExtra(LockScreenActivity.BlockedPackageName, packageName);
-		// Khanh Tran Added
-//		if(packageName.startsWith("com.gueei.applocker"))
-//			lockIntent.putExtra("asignal", "true");
-		// end 			
 		
 		mContext.startActivity(lockIntent);
 	}
+	
 }

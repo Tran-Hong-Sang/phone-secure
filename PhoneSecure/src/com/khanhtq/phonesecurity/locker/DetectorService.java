@@ -6,6 +6,7 @@
 
 package com.khanhtq.phonesecurity.locker;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
@@ -25,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.IBinder;
 
-@SuppressWarnings("deprecation")
 public class DetectorService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -148,7 +148,6 @@ public class DetectorService extends Service {
 		CharSequence text = getText(R.string.service_running);
 
 		// Set the icon, scrolling text and timestamp
-
 		Notification notification = new Notification(R.drawable.statusbar_icon,
 				text, System.currentTimeMillis());
 

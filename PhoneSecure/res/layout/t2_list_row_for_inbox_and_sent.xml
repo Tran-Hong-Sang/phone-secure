@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/t2_list_selector_for_inbox_and_sent"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+ 
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip">
+ 
+        <ImageView
+            android:id="@+id/t2_sent_inbox_icon"
+            android:layout_width="40dip"
+            android:layout_height="30dip"/>
+ 
+    </LinearLayout>
+ 
+    <!-- Title Of Song-->
+    <TextView
+        android:id="@+id/t2_sent_or_inbox_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Gau Yeu"
+        android:textColor="#ffaa99"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+ 
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/t2_sent_or_inbox_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t2_sent_or_inbox_address"
+        android:textColor="#009988"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Toi nay di an do nuong nha..." />
+ 
+    <!-- Rightend Duration -->
+    <TextView
+        android:id="@+id/t2_sent_or_inbox_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/t2_sent_or_inbox_address"
+        android:gravity="right"
+        android:text="5:45PM 12-06-2014"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#887980"
+        android:textStyle="bold"/>
+</RelativeLayout>
