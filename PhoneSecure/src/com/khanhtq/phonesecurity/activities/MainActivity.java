@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.CallLog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
