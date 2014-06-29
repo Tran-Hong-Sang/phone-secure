@@ -7,13 +7,18 @@ import com.khanhtq.phonesecurity.adapters.T2_AdapterForMessageList;
 import com.khanhtq.phonesecurity.models.Message;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
-public class T2_ListMessage extends Activity {
+public class T2_ListMessage extends Activity implements OnClickListener {
 	ListView listview;
-
+	Button t2_bottom_newmessage ;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +28,8 @@ public class T2_ListMessage extends Activity {
 		if(type == null || type.equals("inbox")) setTitle("Inbox");
 		else setTitle("Sent");
 		listview = (ListView) findViewById(R.id.t2_sent_inbox_listview);
+		t2_bottom_newmessage = (Button) findViewById(R.id.t2_bottom_newmessage);
+		t2_bottom_newmessage.setOnClickListener(this);
 		ArrayList<Message> data = new ArrayList<Message>();
 		data.add(new Message(0, "0943396121", "0943396121", System.currentTimeMillis() - 100000,
 				Message.TYPE_INBOX, Message.UNREAD, 0, "Toi nay tra da nha"));
@@ -38,5 +45,24 @@ public class T2_ListMessage extends Activity {
 		Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
 		finish();
+	}
+	@Override
+	public void onClick(View v) {
+		if(t2_bottom_newmessage == v){
+			
+		}		
+	}
+	class NewMessageDialog extends Dialog implements OnClickListener{
+		
+		public NewMessageDialog(Context context) {
+			super(context);
+			
+		}
+
+		@Override
+		public void onClick(View v) {
+			
+		}
+		
 	}
 }

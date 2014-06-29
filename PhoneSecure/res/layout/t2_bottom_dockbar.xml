@@ -7,7 +7,7 @@
     android:textAlignment="viewEnd" >
 
     <Button
-        android:id="@+id/newsms"
+        android:id="@+id/t2_bottom_newmessage"
         android:layout_width="160dp"
         android:layout_height="match_parent"
         android:background="#6d6d6d"
@@ -18,7 +18,7 @@
         android:textColor="#F0F0F0" />
 
     <Button
-        android:id="@+id/setting"
+        android:id="@+id/t2_bottom_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="1dp"
