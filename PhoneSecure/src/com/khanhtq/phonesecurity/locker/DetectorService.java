@@ -259,5 +259,5 @@ public class DetectorService extends Service {
 				}
 			}
 		}
-	}
+	}	
 }

@@ -29,8 +29,7 @@ public class T2_AdapterForMessageList extends BaseAdapter {
 
 			@Override
 			public int compare(Message lhs, Message rhs) {
-				// TODO Auto-generated method stub
-				return 1;
+				return (int) (lhs.getDate()/1000 - rhs.getDate()/1000);
 			}
 		});
 	}

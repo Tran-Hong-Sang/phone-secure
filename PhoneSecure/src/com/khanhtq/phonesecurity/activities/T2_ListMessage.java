@@ -33,4 +33,10 @@ public class T2_ListMessage extends Activity {
 		T2_AdapterForMessageList adapter = new T2_AdapterForMessageList(this,data);
 		listview.setAdapter(adapter);
 	}
+	@Override
+	public void onBackPressed(){
+		Intent i = new Intent(this, MainActivity.class);
+		startActivity(i);
+		finish();
+	}
 }

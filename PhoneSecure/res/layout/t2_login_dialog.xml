@@ -13,7 +13,7 @@
         android:ems="10"
         android:inputType="numberPassword"
         android:password="true"
-        android:hint="password"
+        android:hint="Default pass: 1234"
         >
         <requestFocus />
     </EditText>

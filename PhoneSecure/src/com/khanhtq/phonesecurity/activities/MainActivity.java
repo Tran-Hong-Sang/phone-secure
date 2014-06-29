@@ -5,13 +5,18 @@ package com.khanhtq.phonesecurity.activities;
  * @author Khanh Tran
  *
  */
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CallLog;
 import android.view.View;
@@ -24,10 +29,12 @@ import android.widget.Toast;
 
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.locker.AppLockerActivity;
+import com.khanhtq.phonesecurity.models.Message;
+import com.khanhtq.phonesecurity.utils.T2_SMSUtility;
 import com.khanhtq.phonesecurity.utils.T2_Singleton;
 
 public class MainActivity extends Activity implements OnClickListener {
-	Button btn_main_security_settings, btn_lock;
+	Button btn_main_security_settings, btn_lock,t2_main_import_messages;
 	ImageButton btnInbox,btnConversation, btnSent;
 	
 	@Override
@@ -48,6 +55,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	private void initViews() {
+		t2_main_import_messages = (Button) findViewById(R.id.t2_main_import_messages);
+		t2_main_import_messages.setOnClickListener(this);
 		btn_lock= (Button) findViewById(R.id.btn_main_lock);
 		btn_lock.setOnClickListener(this);
 		btn_main_security_settings = (Button) findViewById(R.id.btn_main_security_settings);
@@ -78,8 +87,16 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.putExtra("type", "inbox");
 			startActivity(i);
 		}
+		if(t2_main_import_messages == v){
+			new RetrieveSMSAndStoreToDB(this).execute();
+		}
 	}
-}
+	@Override
+	public void onResume(){
+		
+		super.onResume();
+	}
+}// End MainActivity class
 
 class LoginDialog extends Dialog implements OnClickListener,
 		OnSharedPreferenceChangeListener {
@@ -137,10 +154,58 @@ class LoginDialog extends Dialog implements OnClickListener,
 			return true;
 		return false;
 	}
-
+	/**
+	 * Prevent press back button
+	 */
+	@Override
+	public void onBackPressed(){
+		return;
+	}
+	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
 
+	}
+}
+//--- AsyncTask for retrieving SMS to save to DB
+class RetrieveSMSAndStoreToDB extends AsyncTask<Void, Void, Void>{
+	Activity activity;
+	public RetrieveSMSAndStoreToDB(Activity act) {
+		this.activity = act;
+		dialog = ProgressDialog.show(activity, "Please wait", 
+		            "Importing Messages", true);
+		// TODO Auto-generated constructor stub
+	}
+	ProgressDialog dialog;
+	@Override
+	protected Void doInBackground(Void... params) {
+		final ArrayList<Message> listMsg = T2_SMSUtility.getMessageListFromInbox(activity);
+		if(listMsg == null || listMsg.size() == 0){
+			activity.runOnUiThread(new Runnable(){
+		          @Override
+		          public void run(){
+		        	  Toast.makeText(activity, "Empty Inbox", 1).show();
+//		        	  new Handler().postDelayed(new Runnable(){
+//		        		    public void run() {
+//		        		        Toast.makeText(activity, "Empty Inbox", 1).show();
+//		        		    }
+//		        		}, 5000);
+		          }
+		       });
+		} else {
+			activity.runOnUiThread(new Runnable(){
+		          @Override
+		          public void run(){
+		        	  Toast.makeText(activity, "Number of SMS is " + listMsg.size(), 1).show();
+		          }
+		       });
+		}
+		
+		return null;
+	}
+	@Override
+	public void onPostExecute(Void v){
+		dialog.dismiss();
 	}
 }

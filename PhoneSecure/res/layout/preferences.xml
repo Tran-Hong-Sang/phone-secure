@@ -9,8 +9,8 @@
     <ToggleButton
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:textOn="AppLocker is Running"
-    	android:textOff="AppLocker Disabled"
+    	android:textOn="Phone Secure Locker is Running"
+    	android:textOff="Phone Secure Locker Disabled"
     	binding:checked="ServiceEnabled"
     	binding:onCheckedChange="ToggleService"
     />

@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.khanhtq.phonesecurity.R;
+import com.khanhtq.phonesecurity.activities.MainActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -76,7 +77,10 @@ public class ApplicationListActivity extends Activity {
 						break;
 					}
 				}
-				Log.e("PKGName", info.activityInfo.packageName);
+				//Log.e("PKGName", info.activityInfo.packageName);
+				//Added khanhtq June 22: no add this app to the list
+				if("com.khanhtq.phonesecurity".equals(info.activityInfo.packageName)) continue;
+				// end added
 				items.add(new AppItem(info.activityInfo.loadLabel(
 						getPackageManager()).toString(),
 						info.activityInfo.name, info.activityInfo.packageName,
@@ -199,5 +203,11 @@ public class ApplicationListActivity extends Activity {
 		}
 		AppLockerPreference.getInstance(this).saveApplicationList(
 				allowed.toArray(new String[0]));
+	}
+	@Override
+	public void onBackPressed(){
+		Intent i = new Intent(this, MainActivity.class);
+		startActivity(i);
+		finish();
 	}
 }

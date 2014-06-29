@@ -2,17 +2,17 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-            android:title="Enable AppLocker">
+            android:title="Enable PhoneSecure">
         <CheckBoxPreference
                 android:key="service_enabled"
-                android:title="AppLocker service"
-                android:summaryOn="AppLocker running"
-                android:summaryOff="AppLocker disabled" />
+                android:title="PhoneSecure service"
+                android:summaryOn="PhoneSecure running"
+                android:summaryOff="PhoneSecure disabled" />
 		<CheckBoxPreference
     		android:key="start_service_after_boot"
     		android:title="Auto Start Service"
     		android:dependency="service_enabled"
-    		android:summaryOn="Auto enable AppLocker after reboot"
+    		android:summaryOn="Auto enable PhoneSecure after reboot"
     		android:summaryOff="Manually startup service after reboot"/>
     </PreferenceCategory>
     <PreferenceCategory

@@ -17,6 +17,8 @@ public class Message {
 	 * The buddy number
 	 */
 	private String from;
+	// Name, by default, it has same with FROM attr
+	private String address;
 	public Message(int _id, String from, String address, long date, int type,
 			int read, int status, String body) {
 		super();
@@ -30,7 +32,6 @@ public class Message {
 		this.body = body;
 	}
 
-	private String address;
 	
 	public String getAddress() {
 		return address;

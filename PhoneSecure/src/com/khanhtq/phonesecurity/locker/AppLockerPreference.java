@@ -44,9 +44,9 @@ public class AppLockerPreference implements OnSharedPreferenceChangeListener {
 		reloadPreferences();
 	}
 	private void reloadPreferences() {
-		mServiceEnabled = mPref.getBoolean(PREF_SERVICE_ENABLED, false);
+		mServiceEnabled = mPref.getBoolean(PREF_SERVICE_ENABLED, true);// khanhtq edited, make false become true
 		mApplicationList = mPref.getString(PREF_APPLICATION_LIST, "").split(";");
-		mAutoStart = mPref.getBoolean(PREF_AUTO_START, false);
+		mAutoStart = mPref.getBoolean(PREF_AUTO_START, true);// khanhtq edited, make false become true
 		mPassword = mPref.getString(PREF_PASSWORD, "1234");
 		if (mPref.getBoolean("relock_policy", true)){
 			try{

@@ -1,7 +1,11 @@
 package com.khanhtq.phonesecurity.utils;
 
 import java.util.Date;
-
+/**
+ * Contain function to format Date/time for displaying
+ * @author Khanh Tran
+ *
+ */
 @SuppressWarnings("deprecation")
 public class T2_DateTimeUtility {
 	public static String getTimeInString(long time) {

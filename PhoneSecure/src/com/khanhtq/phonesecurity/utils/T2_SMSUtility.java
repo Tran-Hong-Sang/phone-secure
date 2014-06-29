@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract.PhoneLookup;
+import android.telephony.SmsManager;
 
 import com.khanhtq.phonesecurity.models.Message;
 
@@ -19,43 +20,37 @@ import com.khanhtq.phonesecurity.models.Message;
  */
 
 public class T2_SMSUtility {
-	Activity con;
-
-	public T2_SMSUtility(Activity c) {
-		this.con = c;
-	}
-
+	
 	/**
 	 * Get list of all original messages from inbox
 	 */
 	@SuppressWarnings("deprecation")
-	public ArrayList<Message> getMessageListFromInbox() {
+	public static ArrayList<Message> getMessageListFromInbox(Activity activity) {
 		ArrayList<Message> lstSms = new ArrayList<Message>();
 		Message objSms = new Message();
-		Uri message = Uri.parse("content://sms/");
-		ContentResolver cr = con.getContentResolver();
+		Uri msgURI = Uri.parse("content://sms/");
+		ContentResolver cr = activity.getContentResolver();
 
-		Cursor c = cr.query(message, null, null, null, null);
-		con.startManagingCursor(c);
+		Cursor c = cr.query(msgURI, null, null, null, null);
+		activity.startManagingCursor(c);
 		int totalSMS = c.getCount();
 
 		if (c.moveToFirst()) {
 			for (int i = 0; i < totalSMS; i++) {
 
 				objSms = new Message();
+				if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
+					objSms.setType(Message.TYPE_INBOX);
+				} else if (c.getString(c.getColumnIndexOrThrow("type"))
+						.contains("2")) {
+					objSms.setType(Message.TYPE_SENT);
+				} else continue;
 				objSms.set_id(c.getInt(c.getColumnIndexOrThrow("_id")));
 				objSms.setAddress(c.getString(c
 						.getColumnIndexOrThrow("address")));
 				objSms.setBody(c.getString(c.getColumnIndexOrThrow("body")));
 				objSms.setRead(c.getInt(c.getColumnIndex("read")));
 				objSms.setDate(c.getLong(c.getColumnIndexOrThrow("date")));
-				if (c.getString(c.getColumnIndexOrThrow("type")).contains("1")) {
-					objSms.setType(Message.TYPE_INBOX);
-				} else if (c.getString(c.getColumnIndexOrThrow("type"))
-						.contains("2")) {
-					objSms.setType(Message.TYPE_SENT);
-				}
-
 				lstSms.add(objSms);
 				c.moveToNext();
 			}
@@ -64,7 +59,12 @@ public class T2_SMSUtility {
 
 		return lstSms;
 	}
-
+	/**
+	 * Get name in contact from number
+	 * @param c
+	 * @param phoneNumber
+	 * @return
+	 */
 	public static CharSequence getAddress(Context c, String phoneNumber) {
 		String name = phoneNumber;
 		ContentResolver cr = c.getContentResolver();
@@ -86,5 +86,11 @@ public class T2_SMSUtility {
 		}
 		return name;
 	}
-
+	/**
+	 * Send a message
+	 */
+	public void sendMessage(Message msg){
+		SmsManager smsManager = SmsManager.getDefault();
+		smsManager.sendTextMessage(msg.getAddress(), null, msg.getBody(), null, null);
+	}
 }

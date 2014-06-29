@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="email">E-mail</string>
+    <string name="pass">Password</string>
+    <string name="btnForgot">Forgot Password</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="tittle">REGISTER</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+   	<string name="userName">Username</string>
+   	<string name="btnBack">Back To Login</string>
+</resources>

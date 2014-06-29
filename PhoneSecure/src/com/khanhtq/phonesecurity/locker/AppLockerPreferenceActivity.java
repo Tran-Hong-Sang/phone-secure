@@ -2,6 +2,7 @@ package com.khanhtq.phonesecurity.locker;
 
 
 import com.khanhtq.phonesecurity.R;
+import com.khanhtq.phonesecurity.activities.MainActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,5 +38,11 @@ public class AppLockerPreferenceActivity extends PreferenceActivity {
 	private void startService() {
 		Intent startService = new Intent(this, DetectorService.class);
 		this.startService(startService);
+	}
+	@Override
+	public void onBackPressed(){
+		Intent i = new Intent(this, MainActivity.class);
+		startActivity(i);
+		finish();
 	}
 }
