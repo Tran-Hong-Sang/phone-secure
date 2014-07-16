@@ -1,25 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#000"
-    android:orientation="vertical" >
+    android:layout_height="300dp"
+    android:background="#000" >
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        layout="@layout/t2_contact_view"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/to_string_in_newmsg"
+         >
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/t2_newmsg_send"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/autoCompleteTextView1"
+        android:layout_toRightOf="@+id/autoCompleteTextView1"
+        android:text="@string/send_new_msg" />
+
+    <EditText
+        android:id="@+id/t2_newmsg_content"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="100dp"
+        android:layout_alignLeft="@+id/autoCompleteTextView1"
+        android:layout_alignRight="@+id/t2_newmsg_send"
+        android:layout_below="@+id/autoCompleteTextView1"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="17dp"
+        android:inputType="textMultiLine"
+        android:maxLines="6"
+        android:scrollbars="vertical"
+        android:textSize="13sp"
+        
          />
 
-    <LinearLayout 
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
-        >
-        <include
-        layout="@layout/t2_bottombar"
-        android:paddingTop="70dp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/t2_viewmsg_notif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/t2_newmsg_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:text="Your message will be encrypted." />
+
+    <Button
+        android:id="@+id/t2_btn_newmsg_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="126dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Close" />
 
 </RelativeLayout>

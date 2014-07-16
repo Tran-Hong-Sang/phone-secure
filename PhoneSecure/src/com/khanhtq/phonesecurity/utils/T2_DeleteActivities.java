@@ -1,7 +1,6 @@
 package com.khanhtq.phonesecurity.utils;
 
 import java.io.File;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentResolver;

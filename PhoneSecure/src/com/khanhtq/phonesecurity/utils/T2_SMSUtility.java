@@ -1,6 +1,7 @@
 package com.khanhtq.phonesecurity.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -56,36 +57,31 @@ public class T2_SMSUtility {
 			}
 		}
 		c.close();
-
+		if(lstSms.size() == 0){
+			Message msg = new Message();
+			msg.set_id(1);
+			msg.setAddress("0987654321");
+			msg.setBody("Hihihahahhahahao");
+			msg.setDate(new Date().getTime() + 123456 * -1);
+			msg.setFrom(msg.getAddress());
+			msg.setRead(Message.UNREAD);
+			msg.setStatus(Message.READ);
+			msg.setType(Message.TYPE_INBOX);
+			lstSms.add(msg);
+			
+			msg.set_id(1);
+			msg.setAddress("012387654321");
+			msg.setBody("Vi Du So 2");
+			msg.setDate(new Date().getTime() + 33456);
+			msg.setFrom(msg.getAddress());
+			msg.setRead(Message.UNREAD);
+			msg.setStatus(Message.READ);
+			msg.setType(Message.TYPE_SENT);
+			lstSms.add(msg);			
+		}
 		return lstSms;
 	}
-	/**
-	 * Get name in contact from number
-	 * @param c
-	 * @param phoneNumber
-	 * @return
-	 */
-	public static CharSequence getAddress(Context c, String phoneNumber) {
-		String name = phoneNumber;
-		ContentResolver cr = c.getContentResolver();
-		Cursor cur = cr.query(
-				Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI,
-						Uri.encode(phoneNumber)),
-				new String[] { PhoneLookup.DISPLAY_NAME }, null, null, null);
-		if (cur != null) {
-			try {
-				if (cur.getCount() > 0) {
-					if (cur.moveToFirst()) {
-						name = cur.getString(cur
-								.getColumnIndex(PhoneLookup.DISPLAY_NAME));
-					}
-				}
-			} finally {
-				cur.close();
-			}
-		}
-		return name;
-	}
+	
 	/**
 	 * Send a message
 	 */

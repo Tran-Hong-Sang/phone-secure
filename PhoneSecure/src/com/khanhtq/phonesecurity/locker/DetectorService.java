@@ -54,13 +54,7 @@ public class DetectorService extends Service {
 			try {
 				mStartForeground.invoke(this, mStartForegroundArgs);
 			} catch (InvocationTargetException e) {
-				// Should not happen.
-				// debug: log.w("Detector", "Unable to invoke startForeground",
-				// e);
 			} catch (IllegalAccessException e) {
-				// Should not happen.
-				// debug: log.w("Detector", "Unable to invoke startForeground",
-				// e);
 			}
 			return;
 		}
@@ -81,19 +75,10 @@ public class DetectorService extends Service {
 			try {
 				mStopForeground.invoke(this, mStopForegroundArgs);
 			} catch (InvocationTargetException e) {
-				// Should not happen.
-				// debug: log.w("Detector", "Unable to invoke stopForeground",
-				// e);
 			} catch (IllegalAccessException e) {
-				// Should not happen.
-				// debug: log.w("Detector", "Unable to invoke stopForeground",
-				// e);
 			}
 			return;
 		}
-
-		// Fall back on the old API. Note to cancel BEFORE changing the
-		// foreground state, since we could be killed at that point.
 		mNM.cancel(id);
 		stopForeground(false);
 	}
@@ -116,10 +101,7 @@ public class DetectorService extends Service {
 
 	@Override
 	public void onDestroy() {
-		// debug: log.i("Detector","Service.Ondestroy");
 		mThread.interrupt();
-
-		// Make sure our notification is gone.
 		stopForegroundCompat(R.string.service_running);
 	}
 
@@ -148,8 +130,8 @@ public class DetectorService extends Service {
 		CharSequence text = getText(R.string.service_running);
 
 		// Set the icon, scrolling text and timestamp
-		Notification notification = new Notification(R.drawable.statusbar_icon,
-				text, System.currentTimeMillis());
+//		Notification notification = new Notification(R.drawable.statusbar_icon,
+//				text, System.currentTimeMillis());
 
 		// The PendingIntent to launch our activity if the user selects this
 		// notification
@@ -157,9 +139,9 @@ public class DetectorService extends Service {
 				new Intent(this, AppLockerActivity.class), 0);
 
 		// Set the info for the views that show in the notification panel.
-		notification.setLatestEventInfo(this, text, text, contentIntent);
-
-		startForegroundCompat(R.string.service_running, notification);
+//		notification.setLatestEventInfo(this, text, text, contentIntent);
+//
+//		startForegroundCompat(R.string.service_running, notification);
 
 		startMonitorThread((ActivityManager) this
 				.getSystemService(Context.ACTIVITY_SERVICE));

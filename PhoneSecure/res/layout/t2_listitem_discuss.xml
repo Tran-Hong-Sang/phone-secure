@@ -4,22 +4,33 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/wrapper"
+    <RelativeLayout
+        android:id="@+id/t2_conversation_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/t2_bubble_yellow"
          >
 
         <TextView
-            android:id="@+id/comment"
-            android:layout_width="wrap_content"
+            android:id="@+id/t2_conversation_comment"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dip"
-            android:background="@drawable/t2_bubble_yellow"
-            android:paddingLeft="10dip"
-            android:text="@string/contact_label"
+            android:paddingLeft="2dip"
+            android:text="Demo Content"
             android:textColor="@android:color/primary_text_light" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/t2_conversation_time"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/t2_conversation_comment"            
+            android:text="Small Text"
+            android:textSize="10sp"
+			android:textStyle="italic"
+             />
+        
+    </RelativeLayout>
 
 </LinearLayout>

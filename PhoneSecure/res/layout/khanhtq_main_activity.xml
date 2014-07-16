@@ -65,29 +65,25 @@
         android:layout_weight="80"
         android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/t2_main_conversation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/t2_main_button_bg"
-            android:src="@drawable/t2_conversation" />
-
-        <ImageButton
+        <Button
             android:id="@+id/t2_main_inbox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/t2_main_button_bg"
-            android:src="@drawable/t2_inbox" />
+            android:layout_marginTop="10dp"
+            android:text="Inbox"
+            android:textColor="#000"
+            />
 
-        <ImageButton
+        <Button
             android:id="@+id/t2_main_sent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/t2_main_button_bg"
-            android:src="@drawable/t2_sent" />
+            android:textColor="#000"
+            android:text="Sent"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -103,7 +99,7 @@
         <TextView
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
-            android:id="@+id/textView1"
+            android:id="@+id/t2_viewmsg_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/footer_text"

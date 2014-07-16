@@ -6,7 +6,6 @@ package com.khanhtq.phonesecurity.activities;
  *
  */
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,34 +15,36 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.CallLog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.locker.AppLockerActivity;
+import com.khanhtq.phonesecurity.locker.DetectorService;
 import com.khanhtq.phonesecurity.models.Message;
 import com.khanhtq.phonesecurity.utils.T2_SMSUtility;
+import com.khanhtq.phonesecurity.utils.T2_SQLiteUtility;
 import com.khanhtq.phonesecurity.utils.T2_Singleton;
 
 public class MainActivity extends Activity implements OnClickListener {
 	Button btn_main_security_settings, btn_lock,t2_main_import_messages;
-	ImageButton btnInbox,btnConversation, btnSent;
+	Button btnInbox, btnSent;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.khanhtq_main_activity);
-		if(!T2_Singleton.isActive()){
-			showLoginDialog();
-		}
+//		if(!T2_Singleton.isActive()){
+//			showLoginDialog();
+//		}
+		// start service
+		Intent startService = new Intent(this, DetectorService.class);
+		this.startService(startService);
+		// end
 		initViews();
 	}
 	/**
@@ -62,12 +63,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		btn_main_security_settings = (Button) findViewById(R.id.btn_main_security_settings);
 		btn_main_security_settings.setOnClickListener(this);
 		
-		btnInbox = (ImageButton) findViewById(R.id.t2_main_inbox);
-		btnSent = (ImageButton) findViewById(R.id.t2_main_sent);
-		btnConversation = (ImageButton) findViewById(R.id.t2_main_conversation);
+		btnInbox = (Button) findViewById(R.id.t2_main_inbox);
+		btnSent = (Button) findViewById(R.id.t2_main_sent);
 		btnInbox.setOnClickListener(this);
 		btnSent.setOnClickListener(this);
-		btnConversation.setOnClickListener(this);
 	}
 
 	@Override
@@ -87,13 +86,21 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.putExtra("type", "inbox");
 			startActivity(i);
 		}
+		if(v == btnSent){
+			Intent i = new Intent(this, T2_ListMessage.class);
+			i.putExtra("type", "sent");
+			startActivity(i);
+		}
 		if(t2_main_import_messages == v){
 			new RetrieveSMSAndStoreToDB(this).execute();
 		}
 	}
 	@Override
 	public void onResume(){
-		
+		if(T2_Singleton._bool != true){
+			showLoginDialog();
+		}
+		T2_Singleton._bool = false;
 		super.onResume();
 	}
 }// End MainActivity class
@@ -140,7 +147,7 @@ class LoginDialog extends Dialog implements OnClickListener,
 			startMain.addCategory(Intent.CATEGORY_HOME);
 			startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			cont.startActivity(startMain);
-			((Activity)cont).finish();
+//			((Activity)cont).finish();
 		}
 
 	}
@@ -170,38 +177,48 @@ class LoginDialog extends Dialog implements OnClickListener,
 }
 //--- AsyncTask for retrieving SMS to save to DB
 class RetrieveSMSAndStoreToDB extends AsyncTask<Void, Void, Void>{
+	private SharedPreferences mPref;
 	Activity activity;
+	private String firsttime;
 	public RetrieveSMSAndStoreToDB(Activity act) {
 		this.activity = act;
+		mPref = PreferenceManager.getDefaultSharedPreferences(activity);
 		dialog = ProgressDialog.show(activity, "Please wait", 
 		            "Importing Messages", true);
-		// TODO Auto-generated constructor stub
 	}
 	ProgressDialog dialog;
 	@Override
 	protected Void doInBackground(Void... params) {
+		firsttime = mPref.getString("is_first_time", "true");
+		if(!firsttime .equals("true")){
+			activity.runOnUiThread(new Runnable(){
+	          @Override
+	          public void run(){
+	        	  Toast.makeText(activity, "You already imported.", Toast.LENGTH_LONG).show();
+	          }
+	       });
+			return null;
+		}
 		final ArrayList<Message> listMsg = T2_SMSUtility.getMessageListFromInbox(activity);
 		if(listMsg == null || listMsg.size() == 0){
 			activity.runOnUiThread(new Runnable(){
 		          @Override
 		          public void run(){
-		        	  Toast.makeText(activity, "Empty Inbox", 1).show();
-//		        	  new Handler().postDelayed(new Runnable(){
-//		        		    public void run() {
-//		        		        Toast.makeText(activity, "Empty Inbox", 1).show();
-//		        		    }
-//		        		}, 5000);
+		        	  Toast.makeText(activity, "Empty Inbox", Toast.LENGTH_LONG).show();
 		          }
 		       });
 		} else {
+			T2_SQLiteUtility dbU = new T2_SQLiteUtility(activity).open("writeDB");
+			dbU.addMessage(listMsg);
 			activity.runOnUiThread(new Runnable(){
 		          @Override
 		          public void run(){
-		        	  Toast.makeText(activity, "Number of SMS is " + listMsg.size(), 1).show();
+		        	  Toast.makeText(activity, "Done importing.", Toast.LENGTH_LONG).show();
 		          }
-		       });
+		    });
+			dbU.close();
 		}
-		
+		mPref.edit().putString("is_first_time", "true").commit();
 		return null;
 	}
 	@Override

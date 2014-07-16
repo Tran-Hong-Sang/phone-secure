@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.models.Message;
+import com.khanhtq.phonesecurity.utils.T2_ContactUtils;
 import com.khanhtq.phonesecurity.utils.T2_DateTimeUtility;
-import com.khanhtq.phonesecurity.utils.T2_SMSUtility;
 
 public class T2_AdapterForMessageList extends BaseAdapter {
 	private ArrayList<Message> list;
@@ -81,7 +81,7 @@ public class T2_AdapterForMessageList extends BaseAdapter {
 		else
 			txtPreview.setText(msg.getBody());
 		txtAddress
-				.setText(T2_SMSUtility.getAddress(activity, msg.getAddress()));
+				.setText(T2_ContactUtils.getContactName(activity, msg.getAddress()));
 		return vi;
 	}
 }

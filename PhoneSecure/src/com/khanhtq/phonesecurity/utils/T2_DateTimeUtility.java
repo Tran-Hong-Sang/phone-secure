@@ -1,10 +1,12 @@
 package com.khanhtq.phonesecurity.utils;
 
 import java.util.Date;
+
 /**
  * Contain function to format Date/time for displaying
+ * 
  * @author Khanh Tran
- *
+ * 
  */
 @SuppressWarnings("deprecation")
 public class T2_DateTimeUtility {
@@ -21,10 +23,18 @@ public class T2_DateTimeUtility {
 		ret += ":";
 		ret += (sec < 10) ? "0" + sec : sec;
 		ret += " ";
-		ret += (day < 10) ? "0" + day : day;
-		ret += "/";
-		ret += (mo < 10) ? "0" + mo : mo;
-		ret += "/" + yr;
+		Date today = new Date();
+		if (day == today.getDate() && mo == today.getMonth()
+				&& yr == today.getYear()) {
+			ret += " Today ";
+		} else {
+			ret += (day < 10) ? "0" + day : day;
+			ret += "/";
+			mo += 1;
+			yr += 1900;
+			ret += (mo < 10) ? "0" + mo : mo;
+			ret += "/" + yr;
+		}
 		return ret;
 	}
 }

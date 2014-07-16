@@ -1,5 +1,6 @@
 package com.khanhtq.phonesecurity.models;
 
+
 /**
  * Entity class used to hold message
  * 
@@ -16,9 +17,9 @@ public class Message {
 	/**
 	 * The buddy number
 	 */
-	private String from;
+	private String from = "";
 	// Name, by default, it has same with FROM attr
-	private String address;
+	private String address ="";
 	public Message(int _id, String from, String address, long date, int type,
 			int read, int status, String body) {
 		super();
@@ -32,6 +33,9 @@ public class Message {
 		this.body = body;
 	}
 
+	public boolean isRead(){
+		return this.read == Message.READ;
+	}
 	
 	public String getAddress() {
 		return address;
@@ -49,7 +53,7 @@ public class Message {
 	// status
 	private int status;
 	// Body
-	private String body;
+	private String body = "";
 
 	public Message() {
 	}
@@ -109,5 +113,7 @@ public class Message {
 	public void setBody(String body) {
 		this.body = body;
 	}
-
+	public String toString (){
+		return from == null? address : from;
+	}
 }

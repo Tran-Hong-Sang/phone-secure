@@ -54,7 +54,12 @@
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-        
+        <activity
+            android:name="com.khanhtq.phonesecurity.activities.T2_ListConversation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.khanhtq.phonesecurity.activities.MainActivity"
             android:excludeFromRecents="true"
@@ -74,6 +79,17 @@
             android:screenOrientation="portrait"
             android:label="List Message"
             >
+        </activity>
+        <activity
+            android:name="com.khanhtq.phonesecurity.activities.T2_ConversionMessage"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
         </activity>
         <receiver android:name="com.khanhtq.phonesecurity.locker.StartupServiceReceiver" >
             <intent-filter>

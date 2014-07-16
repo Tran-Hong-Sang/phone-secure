@@ -2,6 +2,7 @@ package com.khanhtq.phonesecurity.locker;
 
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.activities.MainActivity;
+import com.khanhtq.phonesecurity.utils.T2_Singleton;
 
 import gueei.binding.Binder;
 import android.app.TabActivity;
@@ -21,6 +22,7 @@ public class AppLockerActivity extends TabActivity {
 	{
 		Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
+		T2_Singleton._bool = true;
 		this.finish();
 	}
 	//end

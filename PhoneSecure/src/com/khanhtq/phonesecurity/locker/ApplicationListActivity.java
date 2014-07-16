@@ -10,9 +10,10 @@ import gueei.binding.observables.StringObservable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+ 
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.activities.MainActivity;
+import com.khanhtq.phonesecurity.utils.T2_Singleton;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -68,9 +69,9 @@ public class ApplicationListActivity extends Activity {
 			for (int i = 0; i < length; i++) {
 				ResolveInfo info = mApps.get(i);
 				Drawable image = info.loadIcon(getPackageManager());
-
+				Log.e("IMG",image.toString());
 				boolean included = false;
-
+ 
 				for (int j = 0; j < len; j++) {
 					if (info.activityInfo.packageName.equals(list[j])) {
 						included = true;
@@ -79,7 +80,7 @@ public class ApplicationListActivity extends Activity {
 				}
 				//Log.e("PKGName", info.activityInfo.packageName);
 				//Added khanhtq June 22: no add this app to the list
-				if("com.khanhtq.phonesecurity".equals(info.activityInfo.packageName)) continue;
+				if(!"com.khanhtq.phonesecurity".equals(info.activityInfo.packageName))
 				// end added
 				items.add(new AppItem(info.activityInfo.loadLabel(
 						getPackageManager()).toString(),
@@ -208,6 +209,7 @@ public class ApplicationListActivity extends Activity {
 	public void onBackPressed(){
 		Intent i = new Intent(this, MainActivity.class);
 		startActivity(i);
+		T2_Singleton._bool = true;
 		finish();
 	}
 }
