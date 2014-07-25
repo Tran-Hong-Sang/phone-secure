@@ -29,7 +29,9 @@ public class T2_AdapterForMessageList extends BaseAdapter {
 
 			@Override
 			public int compare(Message lhs, Message rhs) {
-				return (int) (lhs.getDate()/1000 - rhs.getDate()/1000);
+				if(lhs.getDate() > rhs.getDate()) return -1;
+				else return 1;
+//				return (int) (lhs.getDate() / 1000 - rhs.getDate() / 1000);
 			}
 		});
 	}
@@ -47,7 +49,7 @@ public class T2_AdapterForMessageList extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		return position;
-	}
+	} 
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -71,17 +73,23 @@ public class T2_AdapterForMessageList extends BaseAdapter {
 				.findViewById(R.id.t2_sent_or_inbox_time);
 
 		txtTime.setText(T2_DateTimeUtility.getTimeInString(msg.getDate()));
-		if (msg.getRead() == Message.READ) {
-			img.setImageResource(R.drawable.t2_read_message);
-		} else
-			img.setImageResource(R.drawable.t2_unread_message);
+		if (msg.getType() == Message.TYPE_SENT) {
+			// LIST SENT MESSAGES
+			img.setImageResource(R.drawable.t2_sent);
+		} else {
+			//List inbox messages
+			if (msg.getRead() == Message.READ) {
+				img.setImageResource(R.drawable.t2_read_message);
+			} else
+				img.setImageResource(R.drawable.t2_unread_message);
+		}
 		int size = msg.getBody().length();
 		if (size > 20)
 			txtPreview.setText(msg.getBody().substring(0, 20));
 		else
 			txtPreview.setText(msg.getBody());
-		txtAddress
-				.setText(T2_ContactUtils.getContactName(activity, msg.getAddress()));
+		txtAddress.setText(T2_ContactUtils.getContactName(activity,
+				msg.getAddress()));
 		return vi;
 	}
 }

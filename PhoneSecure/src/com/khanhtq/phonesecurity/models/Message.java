@@ -1,6 +1,4 @@
 package com.khanhtq.phonesecurity.models;
-
-
 /**
  * Entity class used to hold message
  * 

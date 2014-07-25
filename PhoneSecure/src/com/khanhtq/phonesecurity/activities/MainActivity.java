@@ -6,6 +6,7 @@ package com.khanhtq.phonesecurity.activities;
  *
  */
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.khanhtq.phonesecurity.R;
 import com.khanhtq.phonesecurity.locker.AppLockerActivity;
 import com.khanhtq.phonesecurity.locker.DetectorService;
@@ -149,6 +151,8 @@ class LoginDialog extends Dialog implements OnClickListener,
 			cont.startActivity(startMain);
 //			((Activity)cont).finish();
 		}
+		
+		
 
 	}
 
@@ -218,7 +222,7 @@ class RetrieveSMSAndStoreToDB extends AsyncTask<Void, Void, Void>{
 		    });
 			dbU.close();
 		}
-		mPref.edit().putString("is_first_time", "true").commit();
+		mPref.edit().putString("is_first_time", "false").commit();
 		return null;
 	}
 	@Override

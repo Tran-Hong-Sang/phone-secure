@@ -76,14 +76,9 @@ public class T2_AdapterForConversationList extends BaseAdapter {
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             
 		if (sms != null) {
-			//int size = sms.getBody().length();
-			// if (size > 20)
-			// t2_conversation_comment.setText(sms.getBody());//.substring(0,
-			// 20));
-			// else
 			t2_conversation_time.setText(T2_DateTimeUtility.getTimeInString(sms.getDate()));
 			t2_conversation_comment.setText(sms.getBody());
-			if (isMine(sms.getAddress())) {
+			if (isMine(sms)) {
 				t2_conversation_wrapper.setBackgroundResource(R.drawable.t2_bubble_green);
 				params.gravity = Gravity.RIGHT;
 				t2_conversation_wrapper.setLayoutParams(params);
@@ -92,13 +87,12 @@ public class T2_AdapterForConversationList extends BaseAdapter {
 				params.gravity = Gravity.LEFT;
 				t2_conversation_wrapper.setLayoutParams(params);
 			}
-			
 		}
 		return view;
 	}
 	
-	private boolean isMine(String mynumber) {
-		return mynumber.equals("123456");
+	private boolean isMine(Message msg) {
+		return msg.getType() == Message.TYPE_SENT;
 	}
 	
 	

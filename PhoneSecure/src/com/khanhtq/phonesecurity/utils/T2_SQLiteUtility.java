@@ -1,13 +1,16 @@
 package com.khanhtq.phonesecurity.utils;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.khanhtq.phonesecurity.models.Message;
 
 /**
@@ -42,7 +45,7 @@ public class T2_SQLiteUtility {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TABLE " + DATABASE_TABLE + " IF NOT EXIST (" + KEY_ROWID
+			db.execSQL("CREATE TABLE if not exists " + DATABASE_TABLE + " (" + KEY_ROWID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_FROM
 					+ " TEXT NOT NULL, " + KEY_ADDRESS + " TEXT NOT NULL, "
 					+ KEY_DATE + " LONG NOT NULL, " + KEY_TYPE
@@ -62,7 +65,6 @@ public class T2_SQLiteUtility {
 	 * @param context
 	 *            Constructor
 	 */
-	static public T2_SQLiteUtility instance = null;
 
 	public T2_SQLiteUtility(Context context) {
 		this.context = context;
@@ -95,10 +97,33 @@ public class T2_SQLiteUtility {
 		cv.put(KEY_TYPE, message.getType());
 		cv.put(KEY_READ, message.getRead());
 		cv.put(KEY_STATUS, message.getStatus());
-		cv.put(KEY_BODY, message.getBody());
+		
+		// Encrypt BODY of sms before inserting to DB
+		String tmpBody = message.getBody();
+		if(tmpBody!= null){
+			try {
+				tmpBody = T2_MessageEncryptionUtility.encrypt(tmpBody);
+			} catch (Exception e) {}			
+		}
+		
+		cv.put(KEY_BODY, tmpBody);
+		//end
+		
 		sqliteDB.insert(DATABASE_TABLE, null, cv);
 	}
-
+	/**
+	 * Add an array of messages
+	 * 
+	 * @param message
+	 */
+	public void addMessage(Message[] listMsg) {
+		if (listMsg == null || listMsg.length == 0)
+			return;
+		int size = listMsg.length;
+		for (int i = 0; i < size; i++) {
+			addMessage(listMsg[i]);
+		}
+	}
 	/**
 	 * Add a list of message
 	 * 
@@ -139,7 +164,10 @@ public class T2_SQLiteUtility {
 		if (type != 0) {
 			query += " WHERE " + KEY_TYPE + " = " + type;
 		}
+		//query += " ORDER BY DATE ";
+		Log.e("query", query);
 		Cursor cursor = sqliteDB.rawQuery(query, null);
+		
 		if (cursor.moveToFirst()) {
 			Message message = null;
 			do {
@@ -149,22 +177,37 @@ public class T2_SQLiteUtility {
 						.getColumnIndex(KEY_FROM)));
 				message.setAddress(cursor.getString(cursor
 						.getColumnIndex(KEY_ADDRESS)));
-				message.setBody(cursor.getString(cursor
-						.getColumnIndex(KEY_BODY)));
+				// Decrypt BODY of sms
+				String tmpBody = cursor.getString(cursor
+						.getColumnIndex(KEY_BODY));
+				try {
+					tmpBody = T2_MessageEncryptionUtility.decrypt(tmpBody);
+				} catch (Exception e) {
+					
+				}
+				message.setBody(tmpBody);
+				
+				//end
 				message.setDate(cursor.getLong(cursor.getColumnIndex(KEY_DATE)));
 				message.setRead(cursor.getInt(cursor.getColumnIndex(KEY_READ)));
 				message.setStatus(cursor.getInt(cursor
 						.getColumnIndex(KEY_STATUS)));
 				message.setType(cursor.getInt(cursor.getColumnIndex(KEY_TYPE)));
 				messages.add(message);
+				Log.e("position", cursor.getPosition() + "");
 			} while (cursor.moveToNext());
 		}
-		Message m = new Message();
-		m.setFrom(T2_ContactUtils.getContactName(context, "+84987345656"));
-		m.setAddress("0987345656");
-		m.setBody("Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.");
-		m.setRead(Message.READ);
-		messages.add(m);
+//		Message m = new Message();
+//		m.setFrom(T2_ContactUtils.getContactName(context, "+84987345656"));
+//		m.setAddress("0987345656");
+//		try {
+//			m.setBody(T2_MessageEncryptionUtility.decrypt(T2_MessageEncryptionUtility.encrypt("Chieu nay di lm ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.Chieu nay di lam ve thi mua mi tom nhe, o nha het mi roi, con moi sua Fami thoi.")));
+//		} catch (Exception e) {
+//			m.setBody("Exception cmnr");
+//		}
+//		
+//		m.setRead(Message.READ);
+//		messages.add(m);
 		return messages;
 	}
 
@@ -221,8 +264,15 @@ public class T2_SQLiteUtility {
 						.getColumnIndex(KEY_FROM)));
 				message.setAddress(cursor.getString(cursor
 						.getColumnIndex(KEY_ADDRESS)));
-				message.setBody(cursor.getString(cursor
-						.getColumnIndex(KEY_BODY)));
+				// Decrypt BODY of sms
+				String tmpBody = cursor.getString(cursor
+						.getColumnIndex(KEY_BODY));
+				try {
+					tmpBody = T2_MessageEncryptionUtility.decrypt(tmpBody);
+				} catch (Exception e) {}
+				message.setBody(tmpBody);
+				
+				//end
 				message.setDate(cursor.getLong(cursor.getColumnIndex(KEY_DATE)));
 				message.setRead(cursor.getInt(cursor.getColumnIndex(KEY_READ)));
 				message.setStatus(cursor.getInt(cursor
@@ -232,12 +282,12 @@ public class T2_SQLiteUtility {
 			} while (cursor.moveToNext());
 		}
 		// data for testing
-		Message m = new Message();
-		m.setFrom(T2_ContactUtils.getContactName(context, "0987345656"));
-		m.setAddress("0987345656");
-		m.setBody("Kute");
-		m.setDate(new Date().getTime() + 3333333);
-		messages.add(m);
+//		Message m = new Message();
+//		m.setFrom(T2_ContactUtils.getContactName(context, "0987345656"));
+//		m.setAddress("0987345656");
+//		m.setBody("Kute");
+//		m.setDate(new Date().getTime() + 3333333);
+//		messages.add(m);
 		// end data for testing
 		return messages;
 	}

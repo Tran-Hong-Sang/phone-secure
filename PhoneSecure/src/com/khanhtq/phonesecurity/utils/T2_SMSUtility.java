@@ -8,7 +8,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.SmsManager;
 
 import com.khanhtq.phonesecurity.models.Message;
@@ -57,36 +56,18 @@ public class T2_SMSUtility {
 			}
 		}
 		c.close();
-		if(lstSms.size() == 0){
-			Message msg = new Message();
-			msg.set_id(1);
-			msg.setAddress("0987654321");
-			msg.setBody("Hihihahahhahahao");
-			msg.setDate(new Date().getTime() + 123456 * -1);
-			msg.setFrom(msg.getAddress());
-			msg.setRead(Message.UNREAD);
-			msg.setStatus(Message.READ);
-			msg.setType(Message.TYPE_INBOX);
-			lstSms.add(msg);
-			
-			msg.set_id(1);
-			msg.setAddress("012387654321");
-			msg.setBody("Vi Du So 2");
-			msg.setDate(new Date().getTime() + 33456);
-			msg.setFrom(msg.getAddress());
-			msg.setRead(Message.UNREAD);
-			msg.setStatus(Message.READ);
-			msg.setType(Message.TYPE_SENT);
-			lstSms.add(msg);			
-		}
 		return lstSms;
 	}
 	
 	/**
 	 * Send a message
 	 */
-	public void sendMessage(Message msg){
+	public static void sendMessage(Message msg, Context cont){
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendTextMessage(msg.getAddress(), null, msg.getBody(), null, null);
+		T2_SQLiteUtility dbU = new T2_SQLiteUtility(cont).open("writeDB");
+		dbU.addMessage(msg);
+		dbU.close();
+		
 	}
 }

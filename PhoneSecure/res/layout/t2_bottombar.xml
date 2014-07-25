@@ -20,7 +20,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/t2_conversation_msgbody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -32,10 +32,11 @@
 
         <Button
             android:layout_width="70dp"
+            android:id="@+id/t2_conversation_send"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/editText1"
-            android:layout_toRightOf="@+id/editText1"
+            android:layout_alignTop="@+id/t2_conversation_msgbody"
+            android:layout_toRightOf="@+id/t2_conversation_msgbody"
             android:text="@string/sendBtn" />
     </RelativeLayout>
 

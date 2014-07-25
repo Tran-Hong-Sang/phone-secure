@@ -11,13 +11,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
-import com.khanhtq.phonesecurity.R;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +22,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.IBinder;
+
+import com.khanhtq.phonesecurity.R;
 
 public class DetectorService extends Service {
 	@Override
@@ -117,17 +116,14 @@ public class DetectorService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// debug: log.i("Detector","Service.OnStartCommand");
 		handleCommand(intent);
-		// We want this service to continue running until it is explicitly
-		// stopped, so return sticky.
 		return Service.START_STICKY;
 	}
 
 	private void handleCommand(Intent intent) {
 		// In this sample, we'll use the same text for the ticker and the
 		// expanded notification
-		CharSequence text = getText(R.string.service_running);
+//		CharSequence text = getText(R.string.service_running);
 
 		// Set the icon, scrolling text and timestamp
 //		Notification notification = new Notification(R.drawable.statusbar_icon,
@@ -135,8 +131,8 @@ public class DetectorService extends Service {
 
 		// The PendingIntent to launch our activity if the user selects this
 		// notification
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, AppLockerActivity.class), 0);
+//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+//				new Intent(this, AppLockerActivity.class), 0);
 
 		// Set the info for the views that show in the notification panel.
 //		notification.setLatestEventInfo(this, text, text, contentIntent);
